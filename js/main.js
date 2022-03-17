@@ -52,6 +52,8 @@ const getUserID = () => {
   };
 };
 
+const userID = getUserID();
+
 const getRandomInteger = (min, max) => {
   if (min >= 0 && max > 0 && min < max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -62,7 +64,7 @@ const getRandomInteger = (min, max) => {
   }
 
   return ('Задан неверный диапазон! Укажите другие числа.');
-}
+};
 
 const getRandomFraction = (min, max, decimalPlaces) => {
   if (min >= 0 && max > 0 && min < max) {
@@ -74,7 +76,7 @@ const getRandomFraction = (min, max, decimalPlaces) => {
   }
 
   return ('Задан неверный диапазон! Укажите другие числа.');
-}
+};
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
@@ -86,7 +88,7 @@ const lng = getRandomFraction(MINIMUM_LNG, MAXIMUM_LNG, 5);
 const createPromo = () => {
   return {
     author: {
-      avatar: 'img/avatars/user${getUserID()}.png',
+      avatar: 'img/avatars/user${ userID }.png',
     },
     offer: {
       title: getRandomArrayElement(TITLES),
