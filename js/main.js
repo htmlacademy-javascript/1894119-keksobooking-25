@@ -45,10 +45,9 @@ const getUserID = () => {
   let i = 1;
   return function() {
     if (i < 10) {
-      return '0${i++}';
-    } else {
-      return i++;
+      return `0${i++}`;
     }
+    return i++;
   };
 };
 
@@ -86,9 +85,10 @@ const lat = getRandomFraction(MINIMUM_LAT, MAXIMUM_LAT, 5);
 const lng = getRandomFraction(MINIMUM_LNG, MAXIMUM_LNG, 5);
 
 const createPromo = () => {
+  const userAvatar = `img/avatars/user${userID}.png`;
   return {
     author: {
-      avatar: 'img/avatars/user${ userID }.png',
+      avatar: userAvatar,
     },
     offer: {
       title: getRandomArrayElement(TITLES),
