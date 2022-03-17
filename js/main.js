@@ -11,7 +11,7 @@ const TYPES = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 const CHEKIN_TIME = ['12:00', '13:00', '14:00'];
 const CHECKOUT_TIME = ['12:00', '13:00', '14:00'];
 const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-const DESCRIPTION = [
+const DESCRIPTIONS = [
   'Сдаётся только славянам',
   'Без детей и животных',
   'Ремонт в стиле лофт',
@@ -39,7 +39,9 @@ const MAXIMUM_ROOMS = 5;
 const MINIMUM_GUESTS = 1;
 const MAXIMUM_GUESTS = 5;
 
-const getUserID = function() {
+const PROMO_COUNT = 10;
+
+const getUserID = () => {
   let i = 1;
   return function() {
     if (i < 10) {
@@ -50,7 +52,7 @@ const getUserID = function() {
   };
 };
 
-function getRandomInteger(min, max) {
+const getRandomInteger = (min, max) => {
   if (min >= 0 && max > 0 && min < max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
@@ -62,7 +64,7 @@ function getRandomInteger(min, max) {
   return ('Задан неверный диапазон! Укажите другие числа.');
 }
 
-function getRandomFraction(min, max, decimalPlaces) {
+const getRandomFraction = (min, max, decimalPlaces) => {
   if (min >= 0 && max > 0 && min < max) {
     return (Math.random() * (max - min) + min).toFixed(decimalPlaces);
   }
@@ -74,13 +76,9 @@ function getRandomFraction(min, max, decimalPlaces) {
   return ('Задан неверный диапазон! Укажите другие числа.');
 }
 
-const getRandomArrayElement = (elements) => {
-  return elements[getRandomInteger(0, elements.length - 1)];
-};
+const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-const getRandomArray = (array) => {
-  return array.slice(0, getRandomInteger(1, array.length - 1));
-};
+const getRandomArray = (array) => array.slice(0, getRandomInteger(1, array.length - 1));
 
 const lat = getRandomFraction(MINIMUM_LAT, MAXIMUM_LAT, 5);
 const lng = getRandomFraction(MINIMUM_LNG, MAXIMUM_LNG, 5);
@@ -100,7 +98,7 @@ const createPromo = () => {
       checkin: getRandomArrayElement(CHEKIN_TIME),
       checkout: getRandomArrayElement(CHECKOUT_TIME),
       features: getRandomArray(FEATURES),
-      description: getRandomArrayElement(DESCRIPTION),
+      description: getRandomArrayElement(DESCRIPTIONS),
       photos: getRandomArray(PHOTOS),
     },
     location: {
@@ -111,7 +109,7 @@ const createPromo = () => {
 };
 
 const getPromo = () => {
-  Array.from({length: 10}, createPromo);
+  Array.from({length: PROMO_COUNT}, createPromo);
 };
 
 getPromo();
