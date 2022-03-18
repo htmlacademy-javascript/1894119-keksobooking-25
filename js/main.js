@@ -1,3 +1,3 @@
-import {getPromo} from "./data";
+import {getPromo} from './data';
 
 getPromo();

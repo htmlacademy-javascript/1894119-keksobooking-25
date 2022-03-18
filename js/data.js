@@ -1,4 +1,4 @@
-import {getRandomInteger, getRandomFraction, getRandomArrayElement, getRandomArray} from "./get-random.js";
+import {getRandomInteger, getRandomFraction, getRandomArrayElement, getRandomArray} from './get-random.js';
 
 const TITLES = [
   'Палатка в лесу',
