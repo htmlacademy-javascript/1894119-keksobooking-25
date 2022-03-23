@@ -1,3 +1,1 @@
-import {getPromo} from './data';
-
-getPromo();
+import './rendering-ads';
