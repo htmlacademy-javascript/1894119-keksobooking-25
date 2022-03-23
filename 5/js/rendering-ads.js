@@ -1,11 +1,19 @@
-import {createAds} from './data';
+import {createAds} from './data.js';
 
 const popupTemplate = document.querySelector('#card').content.querySelector('.popup');
-const mapCanvas = document.querySelector('#map-canvas');
 const similarAds = createAds();
 const similarAdsListFragment = document.createDocumentFragment();
+const valueTypes = {
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец',
+  hotel: 'Отель'
+};
 
-similarAds.forEach(({author, offer}) => {
+// Отрисовает одну карточку
+
+const renderingAds = ({author, offer}) => {
   const popup = popupTemplate.cloneNode(true);
 
   const popupTitle = popup.querySelector('.popup__title');
@@ -19,19 +27,26 @@ similarAds.forEach(({author, offer}) => {
   const popupPhotos = popup.querySelector('.popup__photos');
   const popupAvatar = popup.querySelector('.popup__avatar');
 
-  const valueTypes = {
-    flat: 'Квартира',
-    bungalow: 'Бунгало',
-    house: 'Дом',
-    palace: 'Дворец',
-    hotel: 'Отель'
-  };
-
   const addData = (data, element) => {
     if (data) {
       element.textContent = data;
     }
-    element.classList.add('.visually-hidden');
+    element.remove();
+  };
+
+  const addPhoto = (photoList, data) => {
+    photoList.innerHTML = '';
+    for (let i = 0; i < data.length; i++){
+      const PHOTO_WIDTH = '45';
+      const PHOTO_HEIGHT = '40';
+      const photoItem = document.createElement('img');
+      photoItem.classList.add('popup__photo');
+      photoItem.width = PHOTO_WIDTH;
+      photoItem.height = PHOTO_HEIGHT;
+      photoItem.src = offer.photos[i];
+      photoItem.alt = 'Фотография жилья';
+      photoList.append(photoItem);
+    }
   };
 
   addData(offer.title, popupTitle);
@@ -48,13 +63,13 @@ similarAds.forEach(({author, offer}) => {
   if (offer.rooms && offer.guests) {
     popupCapacity.textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
   } else {
-    popupCapacity.classList.add('.visually-hidden');
+    popupCapacity.remove();
   }
 
   if (offer.checkin && offer.checkout) {
     popupTime.textContent = `Заезд после${offer.checkin}, выезд до ${offer.checkout}`;
   } else {
-    popupTime.classList.add('.visually-hidden');
+    popupTime.remove();
   }
 
   if (offer.features) {
@@ -67,33 +82,28 @@ similarAds.forEach(({author, offer}) => {
       }
     });
   } else {
-    popupFeaturesList.classList.add('.visually-hidden');
+    popupFeaturesList.remove();
   }
 
   if (offer.photos) {
-    popupPhotos.innerHTML = '';
-    for (let i = 0; i < offer.photos.length; i++){
-      const PHOTO_WIDTH = '45';
-      const PHOTO_HEIGHT = '40';
-      const popupPhoto = document.createElement('img');
-      popupPhoto.classList.add('popup__photo');
-      popupPhoto.width = PHOTO_WIDTH;
-      popupPhoto.height = PHOTO_HEIGHT;
-      popupPhoto.src = offer.photos[i];
-      popupPhoto.alt = 'Фотография жилья';
-      popupPhotos.append(popupPhoto);
-    }
+    addPhoto(popupPhotos, offer.photos);
   } else {
-    popupPhotos.classList.add('.visually-hidden');
+    popupPhotos.remove();
   }
 
   if (author.avatar) {
     popupAvatar.src = author.avatar;
   } else {
-    popupAvatar.classList.add('.visually-hidden');
+    popupAvatar.remove();
   }
 
   similarAdsListFragment.append(popup);
+};
+
+// Отрисовывает все карточки
+
+similarAds.forEach(() => {
+  renderingAds();
 });
 
-mapCanvas.append(similarAdsListFragment[0]);
+export {similarAdsListFragment};
