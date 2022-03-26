@@ -59,7 +59,7 @@ const locationLat = getRandomFraction(MINIMUM_LAT, MAXIMUM_LAT, 5);
 const locationLng = getRandomFraction(MINIMUM_LNG, MAXIMUM_LNG, 5);
 
 const createAd = () => {
-  const userAvatar = `img/avatars/user${userID}.png`;
+  const userAvatar = `img/avatars/user${userID()}.png`;
   return {
     author: {
       avatar: userAvatar,
@@ -84,8 +84,6 @@ const createAd = () => {
   };
 };
 
-const createAds = () => {
-  Array.from({length: AD_COUNT}, createAd);
-};
+const createAds = () => Array.from({length: AD_COUNT}, createAd);
 
 export {createAds};
