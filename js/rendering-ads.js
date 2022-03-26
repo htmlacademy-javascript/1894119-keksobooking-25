@@ -13,10 +13,10 @@ const valueTypes = {
 
 const addPhoto = (photoList, photoArray) => {
   photoList.innerHTML = '';
+  const PHOTO_WIDTH = '45';
+  const PHOTO_HEIGHT = '40';
 
-  for (let i = 0; i < photoArray.length; i++){
-    const PHOTO_WIDTH = '45';
-    const PHOTO_HEIGHT = '40';
+  for (let i = 0; i < photoArray.length; i++) {
     const photoItem = document.createElement('img');
     photoItem.classList.add('popup__photo');
     photoItem.width = PHOTO_WIDTH;
@@ -41,7 +41,6 @@ const addFeatures = (featuresList, featuresArray) => {
   return featuresList;
 };
 
-
 // Отрисовает одну карточку
 
 const renderingAds = ({author, offer}) => {
@@ -63,8 +62,8 @@ const renderingAds = ({author, offer}) => {
 
 // Отрисовывает все карточки
 
-similarAds.forEach(({author, offer}) => {
-  renderingAds({author, offer});
+similarAds.forEach((card) => {
+  renderingAds(card);
 });
 
 export {similarAdsListFragment};
