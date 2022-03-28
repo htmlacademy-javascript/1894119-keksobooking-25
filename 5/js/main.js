@@ -1,4 +1,11 @@
-import {similarAdsListFragment} from './rendering-ads.js';
+import {similarAds} from './data.js';
+import {renderingAds} from './rendering-ads.js';
 
 const mapCanvas = document.querySelector('#map-canvas');
-mapCanvas.append(similarAdsListFragment.children[0]);
+const adsListFragment = document.createDocumentFragment();
+
+similarAds.forEach((card) => {
+  adsListFragment.append(renderingAds(card));
+});
+
+mapCanvas.append(adsListFragment.children[0]);
