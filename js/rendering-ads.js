@@ -1,8 +1,7 @@
-import {createAds} from './data.js';
+const PHOTO_WIDTH = 45;
+const PHOTO_HEIGHT = 40;
 
 const popupTemplate = document.querySelector('#card').content.querySelector('.popup');
-const similarAds = createAds();
-const similarAdsListFragment = document.createDocumentFragment();
 const valueTypes = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
@@ -11,17 +10,15 @@ const valueTypes = {
   hotel: 'Отель'
 };
 
-const addPhoto = (photoList, photoArray) => {
+const addPhotos = (photoList, photos) => {
   photoList.innerHTML = '';
-  const PHOTO_WIDTH = '45';
-  const PHOTO_HEIGHT = '40';
 
-  for (let i = 0; i < photoArray.length; i++) {
+  for (let i = 0; i < photos.length; i++) {
     const photoItem = document.createElement('img');
     photoItem.classList.add('popup__photo');
     photoItem.width = PHOTO_WIDTH;
     photoItem.height = PHOTO_HEIGHT;
-    photoItem.src = photoArray[i];
+    photoItem.src = photos[i];
     photoItem.alt = 'Фотография жилья';
     photoList.append(photoItem);
   }
@@ -29,10 +26,10 @@ const addPhoto = (photoList, photoArray) => {
   return photoList;
 };
 
-const addFeatures = (featuresList, featuresArray) => {
+const addFeatures = (featuresList, features) => {
   featuresList.innerHTML = '';
 
-  featuresArray.forEach((feature) => {
+  features.forEach((feature) => {
     const featureItem = document.createElement('li');
     featureItem.classList.add('popup__feature' , `popup__feature--${feature}` );
     featuresList.appendChild(featureItem);
@@ -40,8 +37,6 @@ const addFeatures = (featuresList, featuresArray) => {
 
   return featuresList;
 };
-
-// Отрисовает одну карточку
 
 const renderingAds = ({author, offer}) => {
   const popup = popupTemplate.cloneNode(true);
@@ -52,18 +47,12 @@ const renderingAds = ({author, offer}) => {
   popup.querySelector('.popup__type').textContent = valueTypes[offer.type];
   popup.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
   popup.querySelector('.popup__text--time').textContent = `Заезд после${offer.checkin}, выезд до ${offer.checkout}`;
-  addPhoto(popup.querySelector('.popup__photos'), offer.photos);
+  addPhotos(popup.querySelector('.popup__photos'), offer.photos);
   popup.querySelector('.popup__description').textContent = offer.description;
   addFeatures(popup.querySelector('.popup__features'), offer.features);
   popup.querySelector('.popup__avatar').src = author.avatar;
 
-  similarAdsListFragment.append(popup);
+  return popup;
 };
 
-// Отрисовывает все карточки
-
-similarAds.forEach((card) => {
-  renderingAds(card);
-});
-
-export {similarAdsListFragment};
+export {renderingAds};
