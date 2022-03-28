@@ -41,12 +41,12 @@ const MAXIMUM_ROOMS = 5;
 const MINIMUM_GUESTS = 1;
 const MAXIMUM_GUESTS = 5;
 
-const PROMO_COUNT = 10;
+const AD_COUNT = 10;
 
 const getUserID = () => {
   let i = 1;
   return function() {
-    if (i < PROMO_COUNT) {
+    if (i < AD_COUNT) {
       return `0${i++}`;
     }
     return i++;
@@ -55,18 +55,18 @@ const getUserID = () => {
 
 const userID = getUserID();
 
-const lat = getRandomFraction(MINIMUM_LAT, MAXIMUM_LAT, 5);
-const lng = getRandomFraction(MINIMUM_LNG, MAXIMUM_LNG, 5);
+const locationLat = getRandomFraction(MINIMUM_LAT, MAXIMUM_LAT, 5);
+const locationLng = getRandomFraction(MINIMUM_LNG, MAXIMUM_LNG, 5);
 
-const createPromo = () => {
-  const userAvatar = `img/avatars/user${userID}.png`;
+const createAd = () => {
+  const userAvatar = `img/avatars/user${userID()}.png`;
   return {
     author: {
       avatar: userAvatar,
     },
     offer: {
       title: getRandomArrayElement(TITLES),
-      address: lat, lng,
+      address: `${locationLat}, ${locationLng}`,
       price: getRandomInteger(MINIMUM_PRICE, MAXIMUM_PRICE),
       type: getRandomArrayElement(TYPES),
       rooms: getRandomInteger(MINIMUM_ROOMS, MAXIMUM_ROOMS),
@@ -78,14 +78,13 @@ const createPromo = () => {
       photos: getRandomArray(PHOTOS),
     },
     location: {
-      lat: lat,
-      lng: lng,
+      lat: locationLat,
+      lng: locationLng,
     }
   };
 };
 
-const getPromo = () => {
-  Array.from({length: PROMO_COUNT}, createPromo);
-};
+const createAds = () => Array.from({length: AD_COUNT}, createAd);
+const similarAds = createAds();
 
-export {getPromo};
+export {similarAds};
