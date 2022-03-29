@@ -55,7 +55,7 @@ const getValidatePriceErrorMessage = () => {
 
 pristine.addValidator(price, validatePrice, getValidatePriceErrorMessage);
 
-price.addEventListener('change', () => {
+type.addEventListener('change', () => {
   price.placeholder =  MIN_PRICE[type.value];
 });
 
