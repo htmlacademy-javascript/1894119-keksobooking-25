@@ -1028,3 +1028,9 @@ fieldset {
 .hidden {
   display: none;
 }
+
+/* Ошибка при валидации */
+
+.ad-form__error-text {
+  color: #ff3535;
+}
