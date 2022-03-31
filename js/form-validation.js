@@ -63,7 +63,7 @@ adForm.addEventListener('submit', (evt) => {
   const isValid = pristine.validate();
 
   if (!isValid) {
-    window.console.log('Форма не валидна');
+    console.error('Форма не валидна');
   }
   pristine.validate();
 });
