@@ -30,7 +30,7 @@ const pristine = new Pristine(adForm, {
   errorTextClass: 'ad-form__error-text',
 });
 
-const validatePrice = (value) => value.length >= MIN_PRICE[type.value] && value.length <= MAX_PRICE;
+const validatePrice = (value) => value >= MIN_PRICE[type.value] && value <= MAX_PRICE;
 
 const getValidatePriceErrorMessage = () => {
   if (price.value >= MAX_PRICE) {
@@ -50,15 +50,20 @@ const getValidateCapacityErrorMessage = () => {
   return 'Количество гостей не должно превышать количество комнат';
 };
 
-type.addEventListener('change', () => {
-  price.placeholder =  MIN_PRICE[type.value];
-});
-
 pristine.addValidator(price, validatePrice, getValidatePriceErrorMessage);
 
 pristine.addValidator(capacity, validateCapacity, getValidateCapacityErrorMessage);
 
+type.addEventListener('change', () => {
+  price.placeholder =  MIN_PRICE[type.value];
+  pristine.validate(price);
+});
+
+rooms.addEventListener('change', () => pristine.validate(capacity));
+
 adForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
+  const isValid = pristine.validate();
+  if (!isValid) {
+    evt.preventDefault();
+  }
 });
