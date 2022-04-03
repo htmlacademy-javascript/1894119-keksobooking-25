@@ -18,6 +18,8 @@ const type = adForm.querySelector('[name="type"]');
 const rooms = adForm.querySelector('[name="rooms"]');
 const capacity = adForm.querySelector('[name="capacity"]');
 const address = adForm.querySelector('[name="address"]');
+const checkIn = adForm.querySelector('[name="timein"]');
+const checkOut = adForm.querySelector('[name="timeout"]');
 
 address.value = `${TOKIO_LAT}, ${TOKIO_LNG}`;
 
@@ -70,6 +72,14 @@ type.addEventListener('change', () => {
 });
 
 rooms.addEventListener('change', () => pristine.validate(capacity));
+
+checkIn.addEventListener('change', () => {
+  checkOut.value = checkIn.value;
+});
+
+checkOut.addEventListener('change', () => {
+  checkIn.value = checkOut.value;
+});
 
 adForm.addEventListener('submit', (evt) => {
   const isValid = pristine.validate();
