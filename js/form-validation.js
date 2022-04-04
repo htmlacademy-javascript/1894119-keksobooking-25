@@ -1,8 +1,8 @@
 const MAX_PRICE = 100000;
 const MAX_ROOMS = 100;
 const MIN_GUESTS = 0;
-const TOKIO_LAT = '35.4200';
-const TOKIO_LNG = '139.2530';
+const TOKIO_LAT = 35.681729;
+const TOKIO_LNG = 139.753927;
 
 const minPrice = {
   bungalow: 0,
