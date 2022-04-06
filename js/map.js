@@ -1,6 +1,6 @@
 import {similarAds} from './data.js';
 import {renderingAds} from './rendering-ads.js';
-import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG} from './form-validation.js';
+import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG, MAP_ZOOM} from './const.js';
 
 const adForm = document.querySelector('.ad-form');
 const addressField = adForm.querySelector('[name="address"]');
@@ -13,7 +13,7 @@ const map = L.map('map-canvas')
   .setView({
     lat: CENTER_TOKIO_LAT,
     lng: CENTER_TOKIO_LNG,
-  }, 13);
+  }, MAP_ZOOM);
 
 // Главный маркер с координатами центра Токио
 

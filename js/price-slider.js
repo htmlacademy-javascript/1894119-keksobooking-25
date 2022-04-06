@@ -1,3 +1,5 @@
+import {MAX_PRICE, MIN_PRICE, SLIDER_STEP} from './const.js';
+
 const adForm = document.querySelector('.ad-form');
 const priceSlider = adForm.querySelector('.ad-form__slider');
 const price = adForm.querySelector('#price');
@@ -5,19 +7,15 @@ const type = adForm.querySelector('#type');
 
 noUiSlider.create(priceSlider, {
   range: {
-    min: 0,
-    max: 100000,
+    min: MIN_PRICE,
+    max: MAX_PRICE,
   },
-  start: 5000,
-  step: 1,
+  start: price.placeholder,
+  step: SLIDER_STEP,
   connect: 'lower',
   format: {
-    to: function (value) {
-      return value.toFixed(0);
-    },
-    from: function (value) {
-      return parseFloat(value);
-    },
+    to: (value) => value.toFixed(0),
+    from: (value) => parseFloat(value),
   },
 });
 
