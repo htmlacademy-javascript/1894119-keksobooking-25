@@ -1,8 +1,8 @@
 const MAX_PRICE = 100000;
 const MAX_ROOMS = 100;
 const MIN_GUESTS = 0;
-const TOKIO_LAT = 35.681729;
-const TOKIO_LNG = 139.753927;
+const CENTER_TOKIO_LAT = 35.681729;
+const CENTER_TOKIO_LNG = 139.753927;
 
 const minPrice = {
   bungalow: 0,
@@ -21,7 +21,7 @@ const address = adForm.querySelector('[name="address"]');
 const checkIn = adForm.querySelector('[name="timein"]');
 const checkOut = adForm.querySelector('[name="timeout"]');
 
-address.value = `${TOKIO_LAT}, ${TOKIO_LNG}`;
+address.value = `${CENTER_TOKIO_LAT}, ${CENTER_TOKIO_LNG}`;
 
 const capacityOptions = {
   '1' : '1',
@@ -42,9 +42,6 @@ const pristine = new Pristine(adForm, {
 const validatePrice = (value) => value >= minPrice[type.value] && value <= MAX_PRICE;
 
 const getValidatePriceErrorMessage = () => {
-  if (price.value >= MAX_PRICE) {
-    return `Максимальная цена за ночь — ${MAX_PRICE}`;
-  }
   if (price.value <= minPrice[type.value]) {
     return `Минимальная цена за ночь для выбранного типа жилья — ${minPrice[type.value]}`;
   }
@@ -87,3 +84,5 @@ adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
   }
 });
+
+export {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG};

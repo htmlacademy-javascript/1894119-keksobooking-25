@@ -55,14 +55,12 @@ const getUserID = () => {
 
 const userID = getUserID();
 
-const locationLat = getRandomFraction(MINIMUM_LAT, MAXIMUM_LAT, 5);
-const locationLng = getRandomFraction(MINIMUM_LNG, MAXIMUM_LNG, 5);
-
 const createAd = () => {
-  const userAvatar = `img/avatars/user${userID()}.png`;
+  const locationLat = getRandomFraction(MINIMUM_LAT, MAXIMUM_LAT, 5);
+  const locationLng = getRandomFraction(MINIMUM_LNG, MAXIMUM_LNG, 5);
   return {
     author: {
-      avatar: userAvatar,
+      avatar: `img/avatars/user${userID()}.png`,
     },
     offer: {
       title: getRandomArrayElement(TITLES),
