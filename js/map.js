@@ -1,6 +1,6 @@
 import {similarAds} from './data.js';
 import {renderingAds} from './rendering-ads.js';
-import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG, MAP_ZOOM} from './const.js';
+import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG, MAP_ZOOM, MAIN_PIN_ICON_SIZE, MAIN_PIN_ICON_ANCHOR, PIN_ICON_SIZE, PIN_ICON_ANCHOR} from './const.js';
 
 const adForm = document.querySelector('.ad-form');
 const addressField = adForm.querySelector('[name="address"]');
@@ -19,8 +19,8 @@ const map = L.map('map-canvas')
 
 const mainPinIcon = L.icon({
   iconUrl: './img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+  iconSize: MAIN_PIN_ICON_SIZE,
+  iconAnchor: MAIN_PIN_ICON_ANCHOR,
 });
 
 const mainPinMarker = L.marker(
@@ -38,8 +38,8 @@ const mainPinMarker = L.marker(
 
 const offerPinIcon = L.icon ({
   iconUrl: './img/pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: PIN_ICON_SIZE,
+  iconAnchor: PIN_ICON_ANCHOR,
 });
 
 const markerGroup = L.layerGroup().addTo(map);
