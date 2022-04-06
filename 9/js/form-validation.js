@@ -1,8 +1,5 @@
-const MAX_PRICE = 100000;
-const MAX_ROOMS = 100;
-const MIN_GUESTS = 0;
-const CENTER_TOKIO_LAT = 35.681729;
-const CENTER_TOKIO_LNG = 139.753927;
+import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG, MAX_PRICE, MAX_ROOMS, MIN_GUESTS} from './const.js';
+import './price-slider.js';
 
 const minPrice = {
   bungalow: 0,
@@ -84,5 +81,3 @@ adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
   }
 });
-
-export {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG};
