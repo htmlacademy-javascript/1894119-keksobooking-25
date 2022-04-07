@@ -1,4 +1,15 @@
-import {MAX_PRICE, MIN_PRICE, SLIDER_STEP} from './const.js';
+import {MAX_PRICE, MIN_PRICE} from './const.js';
+
+const SLIDER_STEP = 1;
+const SLIDER_START = 5000;
+
+const minPriceOfType = {
+  bungalow: 0,
+  flat: 1000,
+  hotel: 3000,
+  house: 5000,
+  palace: 10000,
+};
 
 const adForm = document.querySelector('.ad-form');
 const priceSlider = adForm.querySelector('.ad-form__slider');
@@ -10,7 +21,7 @@ noUiSlider.create(priceSlider, {
     min: MIN_PRICE,
     max: MAX_PRICE,
   },
-  start: price.placeholder,
+  start: SLIDER_START,
   step: SLIDER_STEP,
   connect: 'lower',
   format: {
@@ -23,5 +34,9 @@ priceSlider.noUiSlider.on('update', () => {
   price.value = priceSlider.noUiSlider.get();
 });
 
-price.addEventListener('change', () => priceSlider.noUiSlider.set(price.value));
-type.addEventListener('change', () => priceSlider.noUiSlider.set(price.placeholder));
+price.addEventListener('input', () => priceSlider.noUiSlider.set(price.value));
+type.addEventListener('change', () => {
+  priceSlider.noUiSlider.updateOptions({
+    start: minPriceOfType[type.value],
+  });
+});
