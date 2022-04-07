@@ -1,6 +1,13 @@
 import {similarAds} from './data.js';
 import {renderingAds} from './rendering-ads.js';
-import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG, MAP_ZOOM, MAIN_PIN_ICON_SIZE, MAIN_PIN_ICON_ANCHOR, PIN_ICON_SIZE, PIN_ICON_ANCHOR} from './const.js';
+import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG} from './const.js';
+import {activatedPage, disabledPage} from './page-state.js';
+
+const MAP_ZOOM = 13;
+const MAIN_PIN_ICON_SIZE = [52, 52];
+const MAIN_PIN_ICON_ANCHOR = [26, 52];
+const PIN_ICON_SIZE = [40, 40];
+const PIN_ICON_ANCHOR = [20, 40];
 
 const adForm = document.querySelector('.ad-form');
 const addressField = adForm.querySelector('[name="address"]');
@@ -9,7 +16,12 @@ const setAddressFieldValue = (address) => {
   addressField.value = `${address.lat.toFixed(5)}, ${address.lng.toFixed(5)}`;
 };
 
+disabledPage();
+
 const map = L.map('map-canvas')
+  .on('load', () => {
+    activatedPage();
+  })
   .setView({
     lat: CENTER_TOKIO_LAT,
     lng: CENTER_TOKIO_LNG,
