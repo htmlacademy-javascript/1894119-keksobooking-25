@@ -1,5 +1,8 @@
+import {resetMap} from './map.js';
+
 const adForm = document.querySelector('.ad-form');
 const mapFiltersForm = document.querySelector('.map__filters');
+const resetButton = adForm.querySelector('.ad-form__reset');
 
 const disabledElements = (element) => {
   for (let i = 0; i < element.children.length; i++) {
@@ -29,4 +32,15 @@ const activatedPage = () => {
   activatedElements(mapFiltersForm);
 };
 
-export {disabledPage, activatedPage};
+const resetForm = () => {
+  adForm.reset();
+  mapFiltersForm.reset();
+  resetMap();
+};
+
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetForm();
+});
+
+export {disabledPage, activatedPage, resetForm};

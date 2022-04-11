@@ -1,7 +1,7 @@
-import {similarAds} from './data.js';
 import {renderingAds} from './rendering-ads.js';
 import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG} from './const.js';
 import {activatedPage, disabledPage} from './page-state.js';
+import {getData} from './api.js';
 
 const MAP_ZOOM = 13;
 const MAIN_PIN_ICON_SIZE = [52, 52];
@@ -21,6 +21,7 @@ disabledPage();
 const map = L.map('map-canvas')
   .on('load', () => {
     activatedPage();
+    getData();
   })
   .setView({
     lat: CENTER_TOKIO_LAT,
@@ -56,11 +57,11 @@ const offerPinIcon = L.icon ({
 
 const markerGroup = L.layerGroup().addTo(map);
 
-const createOfferMarker = ({author, offer, location}) => {
+const createOfferMarker = (point) => {
   const offerPinMarker = L.marker(
     {
-      lat: location.lat,
-      lng: location.lng,
+      lat: point.lat,
+      lng: point.lng,
     },
     {
       icon: offerPinIcon,
@@ -69,7 +70,30 @@ const createOfferMarker = ({author, offer, location}) => {
 
   offerPinMarker
     .addTo(markerGroup)
-    .bindPopup(renderingAds({author, offer}));
+    .bindPopup(renderingAds(point));
+};
+
+// Отрисовка маркеров с объявлениями
+
+const renderMarkers = (similarAds) => {
+  similarAds.forEach((point) => {
+    createOfferMarker(point);
+  });
+};
+
+// Возвращение карты в исходное состояние
+
+const resetMap = () => {
+  mainPinMarker.setLatLng({
+    lat: CENTER_TOKIO_LAT,
+    lng: CENTER_TOKIO_LNG,
+  });
+  map.setView({
+    lat: CENTER_TOKIO_LAT,
+    lng: CENTER_TOKIO_LNG,
+  }, MAP_ZOOM);
+
+  addressField.value = `${CENTER_TOKIO_LAT}, ${CENTER_TOKIO_LNG}`;
 };
 
 // Рендер карты
@@ -85,16 +109,10 @@ L.tileLayer(
 
 mainPinMarker.addTo(map);
 
-// Добавить маркеры с объявлениями
-
-similarAds.forEach((marker) => {
-  createOfferMarker(marker);
-});
-
 // При передвижении главного маркера в форму передаются координаты
 
 mainPinMarker.on('moveend', (evt) => {
   setAddressFieldValue(evt.target.getLatLng());
 });
 
-export {map};
+export {resetMap, renderMarkers};
