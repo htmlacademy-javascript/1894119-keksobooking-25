@@ -69,21 +69,6 @@ const renderMarkers = (similarAds) => {
   });
 };
 
-// Возвращение карты в исходное состояние
-
-const resetMap = () => {
-  mainPinMarker.setLatLng({
-    lat: CENTER_TOKIO_LAT,
-    lng: CENTER_TOKIO_LNG,
-  });
-  map.setView({
-    lat: CENTER_TOKIO_LAT,
-    lng: CENTER_TOKIO_LNG,
-  }, MAP_ZOOM);
-
-  addressField.value = `${CENTER_TOKIO_LAT}, ${CENTER_TOKIO_LNG}`;
-};
-
 // Инициализация карты
 
 const initMap = (activateForm, initValidation, loadData) => {
@@ -118,4 +103,4 @@ const initMap = (activateForm, initValidation, loadData) => {
   return map;
 };
 
-export {resetMap, renderMarkers, initMap};
+export {MAP_ZOOM, map, mainPinMarker, renderMarkers, initMap};
