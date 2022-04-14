@@ -38,7 +38,7 @@ const addFeatures = (featuresList, features) => {
   return featuresList;
 };
 
-const renderingAds = ({author, offer}) => {
+const renderAds = ({author, offer}) => {
   const popup = popupTemplate.cloneNode(true);
 
   popup.querySelector('.popup__title').textContent = offer.title;
@@ -55,4 +55,4 @@ const renderingAds = ({author, offer}) => {
   return popup;
 };
 
-export {renderingAds};
+export {renderAds};

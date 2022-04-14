@@ -1,10 +1,19 @@
-import './form-validation.js';
-import {renderMarkers} from './map.js';
+import {initValidation} from './form-validation.js';
+import {initMap, renderMarkers} from './map.js';
 import {getData} from './api.js';
+import {activatePage, disablePage} from './page-state.js';
+import {showAlert} from './form-messages.js';
 
-const SIMILAR_AD_COUNT = 10;
+const SIMILAR_ADS_COUNT = 10;
+const GET_DATA_ALERT_MESSAGE = 'Не удалось получить данные с сервера. Обновите страницу';
 
-getData((similarAds) => {
-  renderMarkers(similarAds.slice(0, SIMILAR_AD_COUNT));
-});
+disablePage();
 
+const onLoadSuccess = (similarAds) => {
+  activatePage();
+  renderMarkers(similarAds.slice(0, SIMILAR_ADS_COUNT));
+};
+
+const onLoadFail = () => showAlert(GET_DATA_ALERT_MESSAGE);
+
+initMap(activatePage, initValidation, () => getData(onLoadSuccess, onLoadFail));

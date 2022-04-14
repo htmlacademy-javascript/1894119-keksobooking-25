@@ -7,12 +7,8 @@ const ServerAddress = {
 const getData = (onSuccess, onError) => {
   fetch(ServerAddress.GET_DATA_API)
     .then((response) => response.json())
-    .then((similarAds) => {
-      onSuccess(similarAds);
-    })
-    .catch(() => {
-      onError('Не удалось получить данные с сервера. Обновите страницу');
-    });
+    .then((similarAds) => onSuccess(similarAds))
+    .catch(() => onError());
 };
 
 const sendData = (onSuccess, onError, body) => {

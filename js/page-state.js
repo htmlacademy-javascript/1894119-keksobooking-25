@@ -4,32 +4,32 @@ const adForm = document.querySelector('.ad-form');
 const mapFiltersForm = document.querySelector('.map__filters');
 const resetButton = adForm.querySelector('.ad-form__reset');
 
-const disabledElements = (element) => {
+const disableElements = (element) => {
   for (let i = 0; i < element.children.length; i++) {
     element.children[i].setAttribute('disabled', 'disabled');
   }
 };
 
-const activatedElements = (element) => {
+const activateElements = (element) => {
   for (let i = 0; i < element.children.length; i++) {
     element.children[i].removeAttribute('disabled');
   }
 };
 
-const disabledPage = () => {
+const disablePage = () => {
   adForm.classList.add('ad-form__disabled');
-  disabledElements(adForm);
+  disableElements(adForm);
 
   mapFiltersForm.classList.add('map__filters--disabled');
-  disabledElements(mapFiltersForm);
+  disableElements(mapFiltersForm);
 };
 
-const activatedPage = () => {
+const activatePage = () => {
   adForm.classList.remove('ad-form__disabled');
-  activatedElements(adForm);
+  activateElements(adForm);
 
   mapFiltersForm.classList.remove('map__filters--disabled');
-  activatedElements(mapFiltersForm);
+  activateElements(mapFiltersForm);
 };
 
 const resetForm = () => {
@@ -43,4 +43,4 @@ resetButton.addEventListener('click', (evt) => {
   resetForm();
 });
 
-export {disabledPage, activatedPage, resetForm};
+export {disablePage, activatePage, resetForm};

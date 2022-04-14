@@ -1,7 +1,5 @@
-import {renderingAds} from './rendering-ads.js';
+import {renderAds} from './rendering-ads.js';
 import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG} from './const.js';
-import {activatedPage, disabledPage} from './page-state.js';
-import {getData} from './api.js';
 
 const MAP_ZOOM = 13;
 const MAIN_PIN_ICON_SIZE = [52, 52];
@@ -16,17 +14,7 @@ const setAddressFieldValue = (address) => {
   addressField.value = `${address.lat.toFixed(5)}, ${address.lng.toFixed(5)}`;
 };
 
-disabledPage();
-
-const map = L.map('map-canvas')
-  .on('load', () => {
-    activatedPage();
-    getData();
-  })
-  .setView({
-    lat: CENTER_TOKIO_LAT,
-    lng: CENTER_TOKIO_LNG,
-  }, MAP_ZOOM);
+const map = L.map('map-canvas');
 
 // Главный маркер с координатами центра Токио
 
@@ -70,7 +58,7 @@ const createOfferMarker = (point) => {
 
   offerPinMarker
     .addTo(markerGroup)
-    .bindPopup(renderingAds(point));
+    .bindPopup(renderAds(point));
 };
 
 // Отрисовка маркеров с объявлениями
@@ -96,23 +84,38 @@ const resetMap = () => {
   addressField.value = `${CENTER_TOKIO_LAT}, ${CENTER_TOKIO_LNG}`;
 };
 
-// Рендер карты
+// Инициализация карты
 
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-).addTo(map);
+const initMap = (activateForm, initValidation, loadData) => {
+  map.on('load', () => {
+    if (activateForm) {
+      activateForm();
+    }
+    if (initValidation) {
+      initValidation();
+    }
 
-// Добавить главный маркер
+    loadData();
+  })
+    .setView({
+      lat: CENTER_TOKIO_LAT,
+      lng: CENTER_TOKIO_LNG,
+    }, MAP_ZOOM);
 
-mainPinMarker.addTo(map);
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    },
+  ).addTo(map);
 
-// При передвижении главного маркера в форму передаются координаты
+  mainPinMarker.addTo(map);
 
-mainPinMarker.on('moveend', (evt) => {
-  setAddressFieldValue(evt.target.getLatLng());
-});
+  mainPinMarker.on('moveend', (evt) => {
+    setAddressFieldValue(evt.target.getLatLng());
+  });
 
-export {resetMap, renderMarkers};
+  return map;
+};
+
+export {resetMap, renderMarkers, initMap};
