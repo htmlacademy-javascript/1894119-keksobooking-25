@@ -2,7 +2,7 @@ import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG, MAX_PRICE} from './const.js';
 import './price-slider.js';
 import {sendData} from './api.js';
 import {showFailMessage, showSuccessMessage} from './form-messages.js';
-import {resetForm} from './functions-to-reset.js';
+import {resetForm} from './reset-form.js';
 
 const MAX_ROOMS = 100;
 const MIN_GUESTS = 0;
@@ -94,6 +94,8 @@ const initValidation = () => {
   });
 };
 
+initValidation();
+
 adForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
@@ -113,5 +115,3 @@ adForm.addEventListener('submit', (evt) => {
     );
   }
 });
-
-export {initValidation};

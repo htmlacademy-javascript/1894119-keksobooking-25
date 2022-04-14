@@ -40,6 +40,7 @@ const addFeatures = (featuresList, features) => {
 
 const renderAds = ({author, offer}) => {
   const popup = popupTemplate.cloneNode(true);
+  const featureContainer = popup.querySelector('.popup__features');
 
   popup.querySelector('.popup__title').textContent = offer.title;
   popup.querySelector('.popup__text--address').textContent = offer.address;
@@ -49,7 +50,14 @@ const renderAds = ({author, offer}) => {
   popup.querySelector('.popup__text--time').textContent = `Заезд после${offer.checkin}, выезд до ${offer.checkout}`;
   addPhotos(popup.querySelector('.popup__photos'), offer.photos);
   popup.querySelector('.popup__description').textContent = offer.description;
-  addFeatures(popup.querySelector('.popup__features'), offer.features);
+
+  if (offer.features && offer.features.length > 0) {
+    featureContainer.innerHTML = '';
+    addFeatures(featureContainer, offer.features);
+  } else {
+    featureContainer.remove();
+  }
+
   popup.querySelector('.popup__avatar').src = author.avatar;
 
   return popup;

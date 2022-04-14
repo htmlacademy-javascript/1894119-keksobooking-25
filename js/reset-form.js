@@ -1,5 +1,5 @@
-import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG} from './const.js';
-import {MAP_ZOOM, map, mainPinMarker} from './map.js';
+import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG, MAP_ZOOM} from './const.js';
+import {map, mainPinMarker} from './map.js';
 
 const adForm = document.querySelector('.ad-form');
 const addressField = adForm.querySelector('[name="address"]');
@@ -17,6 +17,7 @@ const resetMap = () => {
     lat: CENTER_TOKIO_LAT,
     lng: CENTER_TOKIO_LNG,
   }, MAP_ZOOM);
+  map.closePopup();
 
   addressField.value = `${CENTER_TOKIO_LAT}, ${CENTER_TOKIO_LNG}`;
 };
