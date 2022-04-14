@@ -1,14 +1,16 @@
+// import {showAlert} from './form-messages.js';
+
+// const GET_DATA_ALERT_MESSAGE = 'Не удалось получить данные с сервера. Обновите страницу';
+
 const ServerAddress = {
   SEND_DATA_API: 'https://25.javascript.pages.academy/keksobooking',
   GET_DATA_API: 'https://25.javascript.pages.academy/keksobooking/data'
 };
 
-
-const getData = (onSuccess, onError) => {
+const getData = (onSuccess) => {
   fetch(ServerAddress.GET_DATA_API)
     .then((response) => response.json())
-    .then((similarAds) => onSuccess(similarAds))
-    .catch(() => onError());
+    .then((similarAds) => onSuccess(similarAds));
 };
 
 const sendData = (onSuccess, onError, body) => {

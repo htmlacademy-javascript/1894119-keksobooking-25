@@ -1,7 +1,7 @@
-import {renderAds} from './rendering-ads.js';
-import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG} from './const.js';
+import {renderAds} from './render-ads.js';
+import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG, MAP_ZOOM} from './const.js';
+import {activatePage} from './page-state.js';
 
-const MAP_ZOOM = 13;
 const MAIN_PIN_ICON_SIZE = [52, 52];
 const MAIN_PIN_ICON_ANCHOR = [26, 52];
 const PIN_ICON_SIZE = [40, 40];
@@ -48,8 +48,8 @@ const markerGroup = L.layerGroup().addTo(map);
 const createOfferMarker = (point) => {
   const offerPinMarker = L.marker(
     {
-      lat: point.lat,
-      lng: point.lng,
+      lat: point.location.lat,
+      lng: point.location.lng,
     },
     {
       icon: offerPinIcon,
@@ -71,16 +71,10 @@ const renderMarkers = (similarAds) => {
 
 // Инициализация карты
 
-const initMap = (activateForm, initValidation, loadData) => {
+const initMap = (cb) => {
   map.on('load', () => {
-    if (activateForm) {
-      activateForm();
-    }
-    if (initValidation) {
-      initValidation();
-    }
-
-    loadData();
+    activatePage();
+    cb();
   })
     .setView({
       lat: CENTER_TOKIO_LAT,
@@ -103,4 +97,4 @@ const initMap = (activateForm, initValidation, loadData) => {
   return map;
 };
 
-export {MAP_ZOOM, map, mainPinMarker, renderMarkers, initMap};
+export {map, mainPinMarker, renderMarkers, initMap};

@@ -1,7 +1,7 @@
 const ESC = 'Escape';
 const ALERT_SHOW_TIME = 7000;
 
-const clickEscapeKey = (evt) => evt.key === ESC;
+const isEscapeKey = (evt) => evt.key === ESC;
 
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 
@@ -22,7 +22,7 @@ const showMessage = (template) => {
   const message =  template.cloneNode(true);
 
   const onEscKeydown = (evt) => {
-    if (clickEscapeKey(evt)) {
+    if (isEscapeKey(evt)) {
       evt.preventDefault();
       message.remove();
     }
