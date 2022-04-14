@@ -2,7 +2,7 @@ import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG, MAX_PRICE} from './const.js';
 import './price-slider.js';
 import {sendData} from './api.js';
 import {showFailMessage, showSuccessMessage} from './form-messages.js';
-import {resetForm} from './page-state.js';
+import {resetForm} from './functions-to-reset.js';
 
 const MAX_ROOMS = 100;
 const MIN_GUESTS = 0;
