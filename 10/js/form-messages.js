@@ -1,29 +1,34 @@
-const isEscapeKey = (evt) => evt.key === 'Escape';
+const ESC = 'Escape';
+const ALERT_SHOW_TIME = 7000;
 
-const successTemplate = document.querySelector('#success')
-  .content
-  .querySelector('.success');
+const clickEscapeKey = (evt) => evt.key === ESC;
 
-const errorTemplate = document.querySelector('#error')
-  .content
-  .querySelector('.error');
+const successTemplate = document.querySelector('#success').content.querySelector('.success');
+
+const errorTemplate = document.querySelector('#error').content.querySelector('.error');
+
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.classList.add('alert-container');
+  alertContainer.textContent = message;
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
+};
 
 const showMessage = (template) => {
   const message =  template.cloneNode(true);
 
-  const removeMessage = () => {
-    message.remove();
-    document.removeEventListener('keydown', onEscKeydown);
+  const onEscKeydown = (evt) => {
+    if (clickEscapeKey(evt)) {
+      evt.preventDefault();
+      message.remove();
+    }
   };
 
-  function onEscKeydown(evt) {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      removeMessage(message);
-    }
-  }
-
-  message.addEventListener('click', () => removeMessage(message));
+  message.addEventListener('click', () => message.remove());
   document.addEventListener('keydown', onEscKeydown);
   document.body.append(message);
 };
@@ -32,4 +37,4 @@ const showMessage = (template) => {
 const showSuccessMessage = () => showMessage(successTemplate);
 const showFailMessage = () => showMessage(errorTemplate);
 
-export {showSuccessMessage, showFailMessage};
+export {showAlert, showSuccessMessage, showFailMessage};
