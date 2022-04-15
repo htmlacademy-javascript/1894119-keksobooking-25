@@ -1,5 +1,4 @@
 const ESC = 'Escape';
-const ALERT_SHOW_TIME = 7000;
 
 const isEscapeKey = (evt) => evt.key === ESC;
 
@@ -12,10 +11,6 @@ const showAlert = (message) => {
   alertContainer.classList.add('alert-container');
   alertContainer.textContent = message;
   document.body.append(alertContainer);
-
-  setTimeout(() => {
-    alertContainer.remove();
-  }, ALERT_SHOW_TIME);
 };
 
 const showMessage = (template) => {

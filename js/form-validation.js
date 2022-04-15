@@ -109,8 +109,8 @@ adForm.addEventListener('submit', (evt) => {
   if (isValid) {
     blockSubmitButton();
     sendData(
-      onSendSuccess(),
-      onSendFail(),
+      () => onSendSuccess(),
+      () => onSendFail(),
       new FormData(evt.target),
     );
   }
