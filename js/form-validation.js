@@ -73,28 +73,35 @@ const unblockSubmitButton = () => {
   submitButton.textContent = 'Опубликовать';
 };
 
-const initValidation = () => {
-  pristine.addValidator(price, validatePrice, getValidatePriceErrorMessage);
-
-  pristine.addValidator(capacity, validateCapacity, getValidateCapacityErrorMessage);
-
-  type.addEventListener('change', () => {
-    price.placeholder = minPrice[type.value];
-    pristine.validate(price);
-  });
-
-  rooms.addEventListener('change', () => pristine.validate(capacity));
-
-  checkIn.addEventListener('change', () => {
-    checkOut.value = checkIn.value;
-  });
-
-  checkOut.addEventListener('change', () => {
-    checkIn.value = checkOut.value;
-  });
+const onSendSuccess = () => {
+  showSuccessMessage();
+  resetForm();
+  unblockSubmitButton();
 };
 
-initValidation();
+const onSendFail = () => {
+  showFailMessage();
+  unblockSubmitButton();
+};
+
+pristine.addValidator(price, validatePrice, getValidatePriceErrorMessage);
+
+pristine.addValidator(capacity, validateCapacity, getValidateCapacityErrorMessage);
+
+type.addEventListener('change', () => {
+  price.placeholder = minPrice[type.value];
+  pristine.validate(price);
+});
+
+rooms.addEventListener('change', () => pristine.validate(capacity));
+
+checkIn.addEventListener('change', () => {
+  checkOut.value = checkIn.value;
+});
+
+checkOut.addEventListener('change', () => {
+  checkIn.value = checkOut.value;
+});
 
 adForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
@@ -102,15 +109,8 @@ adForm.addEventListener('submit', (evt) => {
   if (isValid) {
     blockSubmitButton();
     sendData(
-      () => {
-        showSuccessMessage();
-        resetForm();
-        unblockSubmitButton();
-      },
-      () => {
-        showFailMessage();
-        unblockSubmitButton();
-      },
+      onSendSuccess(),
+      onSendFail(),
       new FormData(evt.target),
     );
   }
