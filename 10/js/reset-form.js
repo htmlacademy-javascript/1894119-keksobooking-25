@@ -1,5 +1,6 @@
-import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG, MAP_ZOOM} from './const.js';
+import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG, MAP_ZOOM, SLIDER_START} from './const.js';
 import {map, mainPinMarker} from './map.js';
+import {priceSlider} from './price-slider.js';
 
 const adForm = document.querySelector('.ad-form');
 const addressField = adForm.querySelector('[name="address"]');
@@ -28,6 +29,9 @@ const resetForm = () => {
   adForm.reset();
   mapFiltersForm.reset();
   resetMap();
+  priceSlider.noUiSlider.updateOptions({
+    start: SLIDER_START,
+  });
 };
 
 resetButton.addEventListener('click', (evt) => {
