@@ -1054,10 +1054,22 @@ fieldset {
   display: none;
 }
 
-
 .ad-form__error-text {
   color: #ff5635;
   display: block;
   padding-top: 5px;
   padding-bottom: 10px;
+}
+
+.alert-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  background-color: #ff5635;
+  padding: 20px 0px;
+  font-size: 30px;
+  text-align: center;
+  width: 100%;
 }

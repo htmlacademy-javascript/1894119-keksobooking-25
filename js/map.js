@@ -1,9 +1,7 @@
-import {similarAds} from './data.js';
-import {renderingAds} from './rendering-ads.js';
-import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG} from './const.js';
-import {activatedPage, disabledPage} from './page-state.js';
+import {renderAds} from './render-ads.js';
+import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG, MAP_ZOOM} from './const.js';
+import {activatePage} from './page-state.js';
 
-const MAP_ZOOM = 13;
 const MAIN_PIN_ICON_SIZE = [52, 52];
 const MAIN_PIN_ICON_ANCHOR = [26, 52];
 const PIN_ICON_SIZE = [40, 40];
@@ -16,16 +14,7 @@ const setAddressFieldValue = (address) => {
   addressField.value = `${address.lat.toFixed(5)}, ${address.lng.toFixed(5)}`;
 };
 
-disabledPage();
-
-const map = L.map('map-canvas')
-  .on('load', () => {
-    activatedPage();
-  })
-  .setView({
-    lat: CENTER_TOKIO_LAT,
-    lng: CENTER_TOKIO_LNG,
-  }, MAP_ZOOM);
+const map = L.map('map-canvas');
 
 // Главный маркер с координатами центра Токио
 
@@ -56,11 +45,11 @@ const offerPinIcon = L.icon ({
 
 const markerGroup = L.layerGroup().addTo(map);
 
-const createOfferMarker = ({author, offer, location}) => {
+const createOfferMarker = (point) => {
   const offerPinMarker = L.marker(
     {
-      lat: location.lat,
-      lng: location.lng,
+      lat: point.location.lat,
+      lng: point.location.lng,
     },
     {
       icon: offerPinIcon,
@@ -69,32 +58,43 @@ const createOfferMarker = ({author, offer, location}) => {
 
   offerPinMarker
     .addTo(markerGroup)
-    .bindPopup(renderingAds({author, offer}));
+    .bindPopup(renderAds(point));
 };
 
-// Рендер карты
+// Отрисовка маркеров с объявлениями
 
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-).addTo(map);
+const renderMarkers = (similarAds) => {
+  similarAds.forEach((point) => {
+    createOfferMarker(point);
+  });
+};
 
-// Добавить главный маркер
+// Инициализация карты
 
-mainPinMarker.addTo(map);
+const initMap = (cb) => {
+  map.on('load', () => {
+    activatePage();
+    cb();
+  })
+    .setView({
+      lat: CENTER_TOKIO_LAT,
+      lng: CENTER_TOKIO_LNG,
+    }, MAP_ZOOM);
 
-// Добавить маркеры с объявлениями
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    },
+  ).addTo(map);
 
-similarAds.forEach((marker) => {
-  createOfferMarker(marker);
-});
+  mainPinMarker.addTo(map);
 
-// При передвижении главного маркера в форму передаются координаты
+  mainPinMarker.on('moveend', (evt) => {
+    setAddressFieldValue(evt.target.getLatLng());
+  });
 
-mainPinMarker.on('moveend', (evt) => {
-  setAddressFieldValue(evt.target.getLatLng());
-});
+  return map;
+};
 
-export {map};
+export {map, mainPinMarker, renderMarkers, initMap};

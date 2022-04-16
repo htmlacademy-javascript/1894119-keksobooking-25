@@ -1,7 +1,6 @@
-import {MAX_PRICE, MIN_PRICE} from './const.js';
+import {MAX_PRICE, MIN_PRICE, SLIDER_START} from './const.js';
 
 const SLIDER_STEP = 1;
-const SLIDER_START = 5000;
 
 const minPriceOfType = {
   bungalow: 0,
@@ -40,3 +39,5 @@ type.addEventListener('change', () => {
     start: minPriceOfType[type.value],
   });
 });
+
+export {priceSlider};

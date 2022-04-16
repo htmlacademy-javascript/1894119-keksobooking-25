@@ -1,5 +1,8 @@
 import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG, MAX_PRICE} from './const.js';
 import './price-slider.js';
+import {sendData} from './api.js';
+import {showFailMessage, showSuccessMessage} from './form-messages.js';
+import {resetForm} from './reset-form.js';
 
 const MAX_ROOMS = 100;
 const MIN_GUESTS = 0;
@@ -20,6 +23,7 @@ const capacity = adForm.querySelector('[name="capacity"]');
 const address = adForm.querySelector('[name="address"]');
 const checkIn = adForm.querySelector('[name="timein"]');
 const checkOut = adForm.querySelector('[name="timeout"]');
+const submitButton = adForm.querySelector('.ad-form__submit');
 
 address.value = `${CENTER_TOKIO_LAT}, ${CENTER_TOKIO_LNG}`;
 
@@ -59,6 +63,27 @@ const getValidateCapacityErrorMessage = () => {
   return 'Количество гостей не должно превышать количество комнат';
 };
 
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Публикуем...';
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
+
+const onSendSuccess = () => {
+  showSuccessMessage();
+  resetForm();
+  unblockSubmitButton();
+};
+
+const onSendFail = () => {
+  showFailMessage();
+  unblockSubmitButton();
+};
+
 pristine.addValidator(price, validatePrice, getValidatePriceErrorMessage);
 
 pristine.addValidator(capacity, validateCapacity, getValidateCapacityErrorMessage);
@@ -79,8 +104,14 @@ checkOut.addEventListener('change', () => {
 });
 
 adForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
   const isValid = pristine.validate();
-  if (!isValid) {
-    evt.preventDefault();
+  if (isValid) {
+    blockSubmitButton();
+    sendData(
+      () => onSendSuccess(),
+      () => onSendFail(),
+      new FormData(evt.target),
+    );
   }
 });
