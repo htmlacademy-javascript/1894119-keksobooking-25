@@ -1,11 +1,14 @@
 import {renderAds} from './render-ads.js';
 import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG, MAP_ZOOM} from './const.js';
 import {activatePage} from './page-state.js';
+import {totalMatch} from './filter.js';
 
 const MAIN_PIN_ICON_SIZE = [52, 52];
 const MAIN_PIN_ICON_ANCHOR = [26, 52];
 const PIN_ICON_SIZE = [40, 40];
 const PIN_ICON_ANCHOR = [20, 40];
+
+const SIMILAR_ADS_COUNT = 10;
 
 const adForm = document.querySelector('.ad-form');
 const addressField = adForm.querySelector('[name="address"]');
@@ -63,18 +66,19 @@ const createOfferMarker = (point) => {
 
 // Отрисовка маркеров с объявлениями
 
-const renderMarkers = (similarAds) => {
-  similarAds.forEach((point) => {
+const renderMarkers = (data) => {
+  markerGroup.clearLayers();
+  const similarAds = totalMatch(data);
+  similarAds.slice(0, SIMILAR_ADS_COUNT).forEach((point) => {
     createOfferMarker(point);
   });
 };
 
 // Инициализация карты
 
-const initMap = (cb) => {
+const initMap = () => {
   map.on('load', () => {
     activatePage();
-    cb();
   })
     .setView({
       lat: CENTER_TOKIO_LAT,
