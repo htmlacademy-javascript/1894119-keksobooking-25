@@ -3,11 +3,13 @@ const ServerAddress = {
   GET_DATA_API: 'https://25.javascript.pages.academy/keksobooking/data'
 };
 
+const GET_DATA_ALERT_MESSAGE = 'Не удалось получить данные с сервера. Обновите страницу';
+
 const getData = (onSuccess, onError) => {
   fetch(ServerAddress.GET_DATA_API)
     .then((response) => response.json())
     .then((similarAds) => onSuccess(similarAds))
-    .catch(() => onError());
+    .catch(() => onError(GET_DATA_ALERT_MESSAGE));
 };
 
 const sendData = (onSuccess, onError, body) => {
