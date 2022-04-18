@@ -13,17 +13,18 @@ const valueTypes = {
 const addPhotos = (photoList, photos) => {
   photoList.innerHTML = '';
 
-  for (let i = 0; i < photos.length; i++) {
-    const photoItem = document.createElement('img');
-    photoItem.classList.add('popup__photo');
-    photoItem.width = PHOTO_WIDTH;
-    photoItem.height = PHOTO_HEIGHT;
-    photoItem.src = photos[i];
-    photoItem.alt = 'Фотография жилья';
-    photoList.append(photoItem);
-  }
+  if (photos) {
+    photos.forEach((photo) => {
+      const photoItem = document.createElement('img');
 
-  return photoList;
+      photoItem.classList.add('popup__photo');
+      photoItem.src = photo;
+      photoItem.width = PHOTO_WIDTH;
+      photoItem.height = PHOTO_HEIGHT;
+
+      photoList.append(photoItem);
+    });
+  }
 };
 
 const addFeatures = (featuresList, features) => {
