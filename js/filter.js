@@ -47,7 +47,7 @@ const checkRooms = ({offer}) => {
   if (housingRooms.value === DEFAULT_VALUE) {
     return true;
   }
-  return offer.rooms === housingRooms.value;
+  return offer.rooms === Number(housingRooms.value);
 };
 
 // Проверка числа гостей
@@ -56,7 +56,7 @@ const checkGuests = ({offer}) => {
   if (housingGuests.value === DEFAULT_VALUE) {
     return true;
   }
-  return offer.guests === housingGuests.value;
+  return offer.guests === Number(housingGuests.value);
 };
 
 // Проверка особенностей
