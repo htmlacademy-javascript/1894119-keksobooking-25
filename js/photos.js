@@ -1,40 +1,44 @@
+const DEFAULT_AVATAR = 'img/muffin-grey.svg';
+const PHOTO_WIDTH = '200px';
+const PHOTO_HEIGHT = '200px';
+
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
-const avatarChooser = document.querySelector('.ad-form-header__input');
-const avatarPreview = document.querySelector('.ad-form-header__preview img');
-const photoChooser = document.querySelector('.ad-form__input');
-const photoPreview = document.querySelector('.ad-form__photo');
+const adForm = document.querySelector('.ad-form');
+const avatarChooser = adForm.querySelector('.ad-form-header__input');
+const avatarPreview = adForm.querySelector('.ad-form-header__preview img');
+const photoChooser = adForm.querySelector('.ad-form__input');
+const photoPreview = adForm.querySelector('.ad-form__photo');
 
-//Аватар
+const getPreview = (fileChooser, previewImg) => {
+  const file = fileChooser.files[0];
+  const fileName = file.name.toLowerCase();
 
-const getAvatarPreview = () => {
-  avatarChooser.addEventListener('change', () => {
-    const fileAvatar = avatarChooser.files[0];
-    const fileAvatarName = fileAvatar.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
-    const matches = FILE_TYPES.some((it) => fileAvatarName.endsWith(it));
-
-    if (matches) {
-      avatarPreview.src = URL.createObjectURL(fileAvatar);
-    }
-  });
+  if (matches) {
+    previewImg.src = URL.createObjectURL(file);
+  }
 };
 
-//Фото жилья
+const onAvatarChange = () => getPreview(avatarChooser, avatarPreview);
 
-const getHousePhotosPreview = () => {
-  photoChooser.addEventListener('change', () => {
-    const filePhoto = photoChooser.files[0];
-    const filePhotoName = filePhoto.name.toLowerCase();
-
-    const matches = FILE_TYPES.some((it) => filePhotoName.endsWith(it));
-
-    if (matches) {
-      const photo = document.createElement('img');
-      photo.src = URL.createObjectURL(filePhoto);
-      photoPreview.append(photo);
-    }
-  });
+const onAdsPhotoChange = (evt) => {
+  photoPreview.innerHTML='';
+  const photo = document.createElement('img');
+  photo.style.width = PHOTO_WIDTH;
+  photo.style.height = PHOTO_HEIGHT;
+  photoPreview.append(photo);
+  getPreview(evt.target, photo);
 };
 
-export {getAvatarPreview, getHousePhotosPreview};
+const clearPhotoPreview = () => {
+  avatarPreview.src = DEFAULT_AVATAR;
+  photoPreview.innerHTML='';
+};
+
+avatarChooser.addEventListener('change', onAvatarChange);
+
+photoChooser.addEventListener('change', onAdsPhotoChange);
+
+export {clearPhotoPreview};
