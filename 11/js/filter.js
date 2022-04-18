@@ -3,14 +3,17 @@ import {map} from './map.js';
 const MIN_PRICE = 10000;
 const MIDDLE_PRICE = 50000;
 const DEFAULT_VALUE = 'any';
-
-const housingType = document.querySelector('#housing-type');
-const housingPrice = document.querySelector('#housing-price');
-const housingRooms = document.querySelector('#housing-rooms');
-const housingGuests = document.querySelector('#housing-guests');
-const housingFeatures = document.querySelector('#housing-features');
+const LOW_PRICE_VALUE = 'low';
+const MIDDLE_PRICE_VALUE = 'middle';
+const HIGH_PRICE_VALUE = 'high';
 
 const filterFormElement = document.querySelector('.map__filters');
+
+const housingType = filterFormElement.querySelector('#housing-type');
+const housingPrice = filterFormElement.querySelector('#housing-price');
+const housingRooms = filterFormElement.querySelector('#housing-rooms');
+const housingGuests = filterFormElement.querySelector('#housing-guests');
+const housingFeatures = filterFormElement.querySelector('#housing-features');
 
 const filterElements = [housingType, housingPrice, housingRooms, housingGuests, housingFeatures];
 
@@ -26,15 +29,15 @@ const checkType = ({offer}) => {
 // Проверка цены за ночь
 
 const checkPrice = ({offer}) => {
-  if (housingPrice.value === 'low') {
+  if (housingPrice.value === LOW_PRICE_VALUE) {
     return offer.price < MIN_PRICE;
   }
 
-  if (housingPrice.value === 'middle') {
+  if (housingPrice.value === MIDDLE_PRICE_VALUE) {
     return offer.price > MIN_PRICE && offer.price < MIDDLE_PRICE;
   }
 
-  if (housingPrice.value === 'high') {
+  if (housingPrice.value === HIGH_PRICE_VALUE) {
     return offer.price > MIDDLE_PRICE;
   }
 
@@ -74,7 +77,7 @@ const checkFeatures = ({offer}) => {
   return true;
 };
 
-const totalMatch = (data) => data.filter((item) =>
+const filterALL = (data) => data.filter((item) =>
   checkType(item) && checkPrice(item) && checkRooms(item) && checkGuests(item) && checkFeatures(item));
 
 const filterChange = (cb) => {
@@ -82,8 +85,6 @@ const filterChange = (cb) => {
     cb();
   });
 };
-
-export {filterChange, totalMatch};
 
 // Закрытие попапа при фильтрации
 
@@ -93,3 +94,4 @@ filterElements.forEach((element) => {
   });
 });
 
+export {filterChange, filterALL};

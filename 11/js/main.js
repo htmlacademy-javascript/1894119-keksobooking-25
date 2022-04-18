@@ -5,18 +5,19 @@ import {disablePage} from './page-state.js';
 import {showAlert} from './form-messages.js';
 import {filterChange} from './filter.js';
 import {debounce} from './util.js';
+import './photos.js';
 
 const RENDER_DELAY = 500;
 
 disablePage();
 
-getData((cards) => {
+const onLoadSuccess = (cards) => {
   initMap();
   renderMarkers(cards);
   filterChange(debounce(
     () => renderMarkers(cards),
     RENDER_DELAY,
   ));
-},
-showAlert
-);
+};
+
+getData(onLoadSuccess, showAlert);
