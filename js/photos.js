@@ -24,15 +24,15 @@ const getPreview = (fileChooser, previewImg) => {
 const onAvatarChange = () => getPreview(avatarChooser, avatarPreview);
 
 const onAdsPhotoChange = (evt) => {
-  photoPreview.innerHTML='';
   const photo = document.createElement('img');
+  photoPreview.innerHTML = '';
   photo.style.width = PHOTO_WIDTH;
   photo.style.height = PHOTO_HEIGHT;
   photoPreview.append(photo);
   getPreview(evt.target, photo);
 };
 
-const clearPhotoPreview = () => {
+const clearPhotosPreview = () => {
   avatarPreview.src = DEFAULT_AVATAR;
   photoPreview.innerHTML='';
 };
@@ -41,4 +41,4 @@ avatarChooser.addEventListener('change', onAvatarChange);
 
 photoChooser.addEventListener('change', onAdsPhotoChange);
 
-export {clearPhotoPreview};
+export {clearPhotosPreview};

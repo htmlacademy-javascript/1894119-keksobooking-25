@@ -3,9 +3,12 @@ import {map} from './map.js';
 const MIN_PRICE = 10000;
 const MIDDLE_PRICE = 50000;
 const DEFAULT_VALUE = 'any';
-const LOW_PRICE_VALUE = 'low';
-const MIDDLE_PRICE_VALUE = 'middle';
-const HIGH_PRICE_VALUE = 'high';
+
+const PriceValue = {
+  LOW_PRICE_VALUE : 'low',
+  MIDDLE_PRICE_VALUE : 'middle',
+  HIGH_PRICE_VALUE : 'high',
+};
 
 const filterFormElement = document.querySelector('.map__filters');
 
@@ -29,15 +32,15 @@ const checkType = ({offer}) => {
 // Проверка цены за ночь
 
 const checkPrice = ({offer}) => {
-  if (housingPrice.value === LOW_PRICE_VALUE) {
+  if (housingPrice.value === PriceValue.LOW_PRICE_VALUE) {
     return offer.price < MIN_PRICE;
   }
 
-  if (housingPrice.value === MIDDLE_PRICE_VALUE) {
+  if (housingPrice.value === PriceValue.MIDDLE_PRICE_VALUE) {
     return offer.price > MIN_PRICE && offer.price < MIDDLE_PRICE;
   }
 
-  if (housingPrice.value === HIGH_PRICE_VALUE) {
+  if (housingPrice.value === PriceValue.HIGH_PRICE_VALUE) {
     return offer.price > MIDDLE_PRICE;
   }
 
@@ -77,10 +80,10 @@ const checkFeatures = ({offer}) => {
   return true;
 };
 
-const filterALL = (data) => data.filter((item) =>
+const filterAll = (data) => data.filter((item) =>
   checkType(item) && checkPrice(item) && checkRooms(item) && checkGuests(item) && checkFeatures(item));
 
-const filterChange = (cb) => {
+const cangeFilter = (cb) => {
   filterFormElement.addEventListener('change', () => {
     cb();
   });
@@ -94,4 +97,4 @@ filterElements.forEach((element) => {
   });
 });
 
-export {filterChange, filterALL};
+export {cangeFilter, filterAll};

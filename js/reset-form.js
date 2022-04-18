@@ -1,7 +1,7 @@
 import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG, MAP_ZOOM, SLIDER_START} from './const.js';
 import {map, mainPinMarker} from './map.js';
 import {priceSlider} from './price-slider.js';
-import {clearPhotoPreview} from './photos.js';
+import {clearPhotosPreview} from './photos.js';
 
 const adForm = document.querySelector('.ad-form');
 const addressField = adForm.querySelector('[name="address"]');
@@ -38,7 +38,7 @@ const resetForm = () => {
 resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   resetForm();
-  clearPhotoPreview();
+  clearPhotosPreview();
 });
 
 export {resetForm};

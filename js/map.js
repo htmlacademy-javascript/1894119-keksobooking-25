@@ -1,7 +1,7 @@
 import {renderAds} from './render-ads.js';
 import {CENTER_TOKIO_LAT, CENTER_TOKIO_LNG, MAP_ZOOM} from './const.js';
 import {activatePage} from './page-state.js';
-import {filterALL} from './filter.js';
+import {filterAll} from './filter.js';
 
 const MAIN_PIN_ICON_SIZE = [52, 52];
 const MAIN_PIN_ICON_ANCHOR = [26, 52];
@@ -68,7 +68,7 @@ const createOfferMarker = (point) => {
 
 const renderMarkers = (data) => {
   markerGroup.clearLayers();
-  const similarAds = filterALL(data);
+  const similarAds = filterAll(data).slice();
   similarAds.slice(0, SIMILAR_ADS_COUNT).forEach((point) => {
     createOfferMarker(point);
   });

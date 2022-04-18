@@ -3,7 +3,7 @@ import {initMap, renderMarkers} from './map.js';
 import {getData} from './api.js';
 import {disablePage} from './page-state.js';
 import {showAlert} from './form-messages.js';
-import {filterChange} from './filter.js';
+import {cangeFilter} from './filter.js';
 import {debounce} from './util.js';
 import './photos.js';
 
@@ -14,7 +14,7 @@ disablePage();
 const onLoadSuccess = (cards) => {
   initMap();
   renderMarkers(cards);
-  filterChange(debounce(
+  cangeFilter(debounce(
     () => renderMarkers(cards),
     RENDER_DELAY,
   ));
